@@ -11,9 +11,8 @@ import UIKit
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        println("Image Selected")
         self.dismissViewControllerAnimated(true, completion: nil)
-        
+
         self.pickedImage.image = image
         
         let myApiKey:NSString = "YOUR_API_KEY"
@@ -31,20 +30,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if(result) {
                 println("Success")
             } else {
-                println("Failed to create activity: " + error.domain)
+                println("Failed to upload image: " + error.domain)
             }
         }
-      
-        
     }
     
     @IBAction func pickImageAction(sender: UIButton) {
-        var image = UIImagePickerController()
-        image.delegate = self;
-        image.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
-        image.allowsEditing = false
+        var imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self;
+        imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+       imagePickerController.allowsEditing = false
         
-        self.presentViewController(image, animated: true, completion: nil)
+        self.presentViewController(imagePickerController, animated: true, completion: nil)
     }
 
     @IBOutlet var pickedImage: UIImageView!
