@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let myApiKey:NSString = "YOUR_API_KEY"
         Everlive.setApplicationKey(myApiKey)
         
-        var imageName:String = "some image";
+        var imageName:String = "myImage";
         var imageData = UIImagePNGRepresentation(image)
         
         let file:EVFile = EVFile()
@@ -33,13 +33,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 println("Failed to upload image: " + error.domain)
             }
         }
+        
+        
+      
+        // fetch files by filename
+        EVFile.fileWithName(imageName, block: { (result:Array!, error:NSError!) -> Void in
+            if(error == nil) {
+                
+                var file:EVFile = result[0] as EVFile;
+                println("Success file name")
+                self.pickedImage.image = UIImage(data: file.data);
+            }
+        })
+        
+        // retrieve an image by Id
+        var fileId:NSString = "file id here";
+        EVFile.file(fileId) { (file:EVFile!, error:NSError!) -> Void in
+            if(error == nil) {
+                println("Success file id")
+                self.pickedImage.image = UIImage(data: file.data);
+            }
+        }
     }
-    
     @IBAction func pickImageAction(sender: UIButton) {
         var imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self;
         imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
-       imagePickerController.allowsEditing = false
+        imagePickerController.allowsEditing = false
         
         self.presentViewController(imagePickerController, animated: true, completion: nil)
     }
