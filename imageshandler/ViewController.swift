@@ -24,7 +24,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let file:EVFile = EVFile()
         file.filename = imageName
         file.data = imageData
-        file.contentType = nil
+        file.contentType = nil // TODO - check in the SDK why is this not set behind the scenes
         
         file.save { (result:Bool, error:NSError!) -> Void in
             if(result) {
@@ -33,8 +33,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 println("Failed to upload image: " + error.domain)
             }
         }
-        
-        
       
         // fetch files by filename
         EVFile.fileWithName(imageName, block: { (result:Array!, error:NSError!) -> Void in
@@ -54,6 +52,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 self.pickedImage.image = UIImage(data: file.data);
             }
         }
+        
+        // TODO: retrieve an image by Url using the downloadData
+        
     }
     @IBAction func pickImageAction(sender: UIButton) {
         var imagePickerController = UIImagePickerController()
