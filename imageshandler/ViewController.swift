@@ -24,7 +24,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let file:EVFile = EVFile()
         file.filename = imageName
         file.data = imageData
-        file.contentType = nil // TODO - check in the SDK why is this not set behind the scenes
+        file.contentType = nil // the SDK will set the type for images behind the scenes
         
         file.save { (result:Bool, error:NSError!) -> Void in
             if(result) {
